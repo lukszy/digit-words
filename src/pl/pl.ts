@@ -6,23 +6,23 @@ const unity = {
   2: 'dwa',
   3: 'trzy',
   4: 'cztery',
-  5: 'piec',
-  6: 'szesc',
+  5: 'pięć',
+  6: 'sześć',
   7: 'siedem',
   8: 'osiem',
-  9: 'dziewiec',
+  9: 'dziewięć',
 };
 
 const teens = {
-  11: 'jedenascie',
-  12: 'dwanascie',
-  13: 'trzynascie',
-  14: 'czternascie',
-  15: 'pietnascie',
-  16: 'szesnascie',
-  17: 'siedemnascie',
-  18: 'osiemnascie',
-  19: 'dziewietnascie',
+  11: 'jedenaście',
+  12: 'dwanaście',
+  13: 'trzynaście',
+  14: 'czternaście',
+  15: 'piętnaście',
+  16: 'szesnaście',
+  17: 'siedemnaście',
+  18: 'osiemnaście',
+  19: 'dziewiętnaście',
 };
 
 const dozens = {
@@ -39,7 +39,7 @@ const dozens = {
 
 const hundreds = {
   100: 'sto',
-  200: 'dwiescie',
+  200: 'dwieście',
   300: 'trzysta',
   400: 'czterysta',
   500: 'piećset',
@@ -50,7 +50,7 @@ const hundreds = {
 };
 
 const thousands = {
-  1000: ['tysiac', 'tysiące', 'tysięcy'],
+  1000: ['tysiąc', 'tysiące', 'tysięcy'],
   1000000: ['milion', 'miliony', 'milionów'],
   1000000000: ['miliard', 'miliardy', 'miliardów'],
   1000000000000: ['trylion', 'tryliony', 'trylionów'],
@@ -62,7 +62,7 @@ export const convert = (value: number) => {
   let result = [];
 
   while (size) {
-    const multiplier = Math.pow(10, size - 1);
+    const multiplier = currentValue >= 20 ? Math.pow(10, size - 1) : 1;
     const rest = currentValue % multiplier;
     const dozen = currentValue - rest;
     const firstDigit = dozen / multiplier;
@@ -87,19 +87,19 @@ export const convert = (value: number) => {
   return result.filter(Boolean).join(' ');
 };
 
-const getSuffix = (value: number, multiplier: number): string => {
+export const getSuffix = (value: number, multiplier: number): string => {
   if (multiplier in thousands) {
     const [single, plural, multiple] = thousands[multiplier];
     if (value === 1) {
       return single;
     }
 
-    if ([2, 3, 4].indexOf(value)) {
+    if ([2, 3, 4].indexOf(value) > -1) {
       return plural;
     }
 
     return multiple;
   }
 
-  return '';
+  return null;
 };
