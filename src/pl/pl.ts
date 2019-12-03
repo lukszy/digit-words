@@ -87,7 +87,7 @@ export const convert = (value: number) => {
   return result.filter(Boolean).join(' ');
 };
 
-export const getSuffix = (value: number, multiplier: number): string => {
+export const getSuffix = (value: number, multiplier: number): string | null => {
   if (multiplier in thousands) {
     const [single, plural, multiple] = thousands[multiplier];
     if (value === 1) {
