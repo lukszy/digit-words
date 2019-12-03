@@ -1,4 +1,4 @@
-import { convert, getSuffix } from './pl';
+import { convert } from './pl';
 
 describe('PL', () => {
   describe('convert', () => {
@@ -19,22 +19,15 @@ describe('PL', () => {
         'siedemdziesiąt siedem tysięcy siedemset siedemdziesiąt siedem',
       );
     });
-  });
 
-  describe('getSuffix', () => {
-    it('should render nothing for 23321', () => {
-      const result = getSuffix(2, 10000);
-      expect(result).toBe(null);
+    it('123.22', () => {
+      expect(convert(123.22)).toEqual('sto dwadzieścia trzy i 22/100');
     });
 
-    it('should render "tysiące" for 3232', () => {
-      const result = getSuffix(3, 1000);
-      expect(result).toBe('tysiące');
-    });
-
-    it('should render "milionów" for 6123123', () => {
-      const result = getSuffix(6, 1000000);
-      expect(result).toBe('milionów');
+    it('4312.1', () => {
+      expect(convert(4312.1)).toEqual(
+        'cztery tysiące trzysta dwanaście i 10/100',
+      );
     });
   });
 });

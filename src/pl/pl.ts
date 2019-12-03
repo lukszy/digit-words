@@ -1,4 +1,4 @@
-import { addCommas } from '../utils';
+import { addCommas, isInteger } from '../utils';
 
 const unity = {
   0: '',
@@ -58,13 +58,33 @@ const thousands = {
 
 export const convert = (value: number) => {
   let size = value.toString().length;
+
   let currentValue = value;
+  let decimal = null;
+
+  if (!isInteger(value)) {
+    decimal = value % 1;
+    currentValue = value - decimal;
+    size = currentValue.toString().length;
+  }
+
+  let results = toWords(currentValue, size);
+
+  if (decimal) {
+    const [, leftover] = decimal.toFixed(2).split('.');
+    results = [...results, 'i', `${leftover}/100`];
+  }
+
+  return results.join(' ');
+};
+
+const toWords = (current: number, size: number): string[] => {
   let result = [];
 
   while (size) {
-    const multiplier = currentValue >= 20 ? Math.pow(10, size - 1) : 1;
-    const rest = currentValue % multiplier;
-    const dozen = currentValue - rest;
+    const multiplier = current >= 20 ? Math.pow(10, size - 1) : 1;
+    const rest = current % multiplier;
+    const dozen = current - rest;
     const firstDigit = dozen / multiplier;
     const humanized = addCommas(dozen);
     const [firstPart] = humanized.split(',');
@@ -81,13 +101,13 @@ export const convert = (value: number) => {
 
     result = [...result, getSuffix(firstDigit, multiplier)];
     size = size - 1;
-    currentValue = rest;
+    current = rest;
   }
 
-  return result.filter(Boolean).join(' ');
+  return result.filter(Boolean);
 };
 
-export const getSuffix = (value: number, multiplier: number): string | null => {
+const getSuffix = (value: number, multiplier: number): string | null => {
   if (multiplier in thousands) {
     const [single, plural, multiple] = thousands[multiplier];
     if (value === 1) {
