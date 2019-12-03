@@ -1,4 +1,4 @@
-#Digit Words
+# Digit Words
 
 Simple and small library for converting digits to words. Currently only PL language is supported. All contributors all welcome! :D
 
