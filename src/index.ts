@@ -1,1 +1,3 @@
-export * from './digit-words';
+import { DigitWords } from './digit-words';
+
+export default DigitWords;
