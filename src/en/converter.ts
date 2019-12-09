@@ -35,7 +35,7 @@ const dozens = {
   10: 'ten',
   20: 'twenty',
   30: 'thirty',
-  40: 'fourty',
+  40: 'forty',
   50: 'fifty',
   60: 'sixty',
   70: 'seventy',
@@ -44,24 +44,23 @@ const dozens = {
 };
 
 const hundreds = {
-  100: 'one hundred',
-  200: 'two hundred',
-  300: 'three hundred',
-  400: 'four hundred',
-  500: 'five hundred',
-  600: 'six hundred',
-  700: 'seven hundred',
-  800: 'eight hundred',
-  900: 'nine hundred',
+  100: 'one',
+  200: 'two',
+  300: 'three',
+  400: 'four',
+  500: 'five',
+  600: 'six',
+  700: 'seven',
+  800: 'eight',
+  900: 'nine',
 };
 
-const thousands = [null, 'thousand', 'milion', 'miliard', 'bilion'];
+const thousands = [null, 'thousand', 'million', 'billion', 'trillion'];
 
 const combined = {
   ...unity,
   ...teens,
   ...dozens,
-  ...hundreds,
 };
 
 export const convert = (value: number): string => {
@@ -83,12 +82,13 @@ const toWords = (value: number): string => {
     const rest = current % Math.pow(10, size - 1);
     const dozen = current - rest;
 
-    if (current in combined) {
+    if (size === 3 && dozen % 100 === 0) {
+      const firstDigit = current.toString().charAt(0);
+      result = [...result, unity[firstDigit], 'hundred'];
+    } else if (current in combined) {
       result = [...result, combined[current]];
       break;
-    }
-
-    if (dozen in combined) {
+    } else if (dozen in combined) {
       result = [...result, combined[dozen]];
     }
 
@@ -96,7 +96,19 @@ const toWords = (value: number): string => {
     size = rest.toString().length;
   }
 
-  return result.join(' ');
+  if (result.length === 1) {
+    return result.join(' ');
+  }
+
+  if (result.length === 2) {
+    return result.join('-');
+  }
+
+  return [
+    result.slice(0, 1),
+    result.slice(1, 2),
+    result.slice(2).join('-'),
+  ].join(' ');
 };
 
 const getDecimalName = (index: number): string => {

@@ -1,6 +1,8 @@
 # Digit Words
 
-Simple and small library for converting digits to words. Currently only PL language is supported. Contributors all welcome!
+Simple and small library for converting digits to words.
+Currently **PL** and **EN** languages are supported.
+Contributors all welcome!
 
 ### Installation
 
@@ -19,11 +21,6 @@ const digitWords = new DigitWords(); // default is 'pl'
 
 const result = digitWords.toWords(1234);
 // jeden tysiąc dwieście trzydzieści cztery
-
-// or
-
-const result = converter.toWords(123.12);
-// sto dwadzieścia trzy i 12/100
 
 ```
 
