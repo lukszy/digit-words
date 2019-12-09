@@ -3,6 +3,9 @@
   "version": "0.0.2",
   "description": "Digits to words converted. Language support: EN, PL.",
   "main": "dist/index.js",
+  "repository": {
+    "url": "https://github.com/dobrysmak/digits-words"
+  },
   "scripts": {
     "test": "npx jest",
     "build": "npx rimraf dist && npx tsc -p tsconfig.json",
