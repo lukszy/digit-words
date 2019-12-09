@@ -2,7 +2,7 @@
   "name": "digit-words",
   "version": "0.0.2",
   "description": "Digits to words converted. Language support: EN, PL.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "npx jest",
     "build": "npx rimraf dist && npx tsc -p tsconfig.json",
