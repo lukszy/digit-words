@@ -1,17 +1,17 @@
-import * as pl from './pl';
-
 type Language = 'pl';
-const converters = {
-  pl,
-};
+
+interface Converter {
+  convert: (value: number) => string;
+}
 
 export class DigitWords {
+  private converter: Converter;
+
   constructor(private lang: Language = 'pl') {
-    if (!(lang in converters)) {
-      const supported = Object.keys(converters).join(', ');
-      throw new Error(
-        `Language is NOT yet supported. Supported languages: ${supported}`,
-      );
+    try {
+      this.converter = require(`./${lang}`);
+    } catch (e) {
+      throw new Error(`Language is NOT yet supported`);
     }
   }
 
@@ -24,6 +24,6 @@ export class DigitWords {
       throw new Error('Value must be greater than 0.');
     }
 
-    return converters[this.lang].convert(value);
+    return this.converter.convert(value);
   }
 }

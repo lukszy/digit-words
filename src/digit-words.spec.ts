@@ -10,7 +10,7 @@ describe('DigitWords', () => {
   });
 
   it('should throw if using not supported language', () => {
-    expect(() => new DigitWords('en' as any)).toThrow();
+    expect(() => new DigitWords('de' as any)).toThrow();
   });
 
   describe('toWords', () => {
