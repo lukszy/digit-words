@@ -1,6 +1,6 @@
 {
   "name": "digit-words",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Digits to words converted. Language support: EN, PL.",
   "main": "dist/index.js",
   "repository": {
