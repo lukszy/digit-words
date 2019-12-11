@@ -1,8 +1,12 @@
 # Digit Words
 
 Simple and small library for converting digits to words.
-Currently **PL** and **EN** languages are supported.
 Contributors all welcome!
+
+| Langage | Supported |
+| ------- | --------- |
+| Polish  | Yes       |
+| English | Yes       |
 
 ### Installation
 

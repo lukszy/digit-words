@@ -3,7 +3,7 @@ import {
   addCommas,
   isBetween,
   getLowestValue,
-  breakValue,
+  breakNumber,
 } from '../utils';
 
 const unity = {
@@ -64,10 +64,12 @@ const combined = {
 };
 
 export const convert = (value: number): string => {
-  return breakValue(value)
-    .reduce((list, val, index) => {
-      return [...list, getDecimalName(index), toWords(val)];
-    }, [])
+  return breakNumber(value)
+    .reverse()
+    .reduce(
+      (list, val, index) => [...list, getDecimalName(index), toWords(val)],
+      [],
+    )
     .reverse()
     .join(' ')
     .trim();

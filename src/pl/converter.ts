@@ -1,4 +1,4 @@
-import { breakValue } from '../utils';
+import { breakNumber } from '../utils';
 
 const unity = {
   0: '',
@@ -65,10 +65,12 @@ const combined = {
 };
 
 export const convert = (value: number): string => {
-  return breakValue(value)
-    .reduce((list, val, index) => {
-      return [...list, getDecimalName(val, index), toWords(val)];
-    }, [])
+  return breakNumber(value)
+    .reverse()
+    .reduce(
+      (list, val, index) => [...list, getDecimalName(val, index), toWords(val)],
+      [],
+    )
     .reverse()
     .join(' ')
     .trim();
