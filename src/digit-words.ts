@@ -1,4 +1,4 @@
-type Language = 'pl';
+type Language = 'pl' | 'en' | 'cz';
 
 interface Converter {
   convert: (value: number) => string;
