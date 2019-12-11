@@ -3,10 +3,11 @@
 Simple and small library for converting digits to words.
 Contributors all welcome!
 
-| Langage | Supported |
-| ------- | --------- |
-| Polish  | Yes       |
-| English | Yes       |
+| Langage | Supported                  |
+| ------- | -------------------------- |
+| Polish  | Yes                        |
+| English | Yes                        |
+| Czech   | Yes, verification required |
 
 ### Installation
 

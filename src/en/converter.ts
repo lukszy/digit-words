@@ -1,10 +1,4 @@
-import {
-  isInteger,
-  addCommas,
-  isBetween,
-  getLowestValue,
-  breakNumber,
-} from '../utils';
+import { breakNumber } from '../utils';
 
 const unity = {
   0: '',
@@ -41,18 +35,6 @@ const dozens = {
   70: 'seventy',
   80: 'eighty',
   90: 'ninety',
-};
-
-const hundreds = {
-  100: 'one',
-  200: 'two',
-  300: 'three',
-  400: 'four',
-  500: 'five',
-  600: 'six',
-  700: 'seven',
-  800: 'eight',
-  900: 'nine',
 };
 
 const thousands = [null, 'thousand', 'million', 'billion', 'trillion'];

@@ -1,7 +1,7 @@
 {
   "name": "digit-words",
-  "version": "0.0.3",
-  "description": "Digits to words converted. Language support: EN, PL.",
+  "version": "0.0.4",
+  "description": "Digits to words converted. Language support: English, Polish, Czech.",
   "main": "dist/index.js",
   "repository": {
     "url": "https://github.com/dobrysmak/digits-words"
