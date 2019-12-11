@@ -1,5 +1,3 @@
-type Language = 'pl' | 'en' | 'cz';
-
 interface Converter {
   convert: (value: number) => string;
 }
@@ -7,7 +5,7 @@ interface Converter {
 export class DigitWords {
   private converter: Converter;
 
-  constructor(private lang: Language = 'pl') {
+  constructor(private lang: string = 'pl') {
     try {
       this.converter = require(`./${lang}`);
     } catch (e) {
