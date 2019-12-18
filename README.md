@@ -3,11 +3,11 @@
 Simple and small library for converting digits to words.
 Contributors all welcome!
 
-| Langage | Supported |
-| ------- | --------- |
-| Polish  | Yes       |
-| English | Yes       |
-| Czech   | Yes       |
+| Language | Supported |
+| -------- | --------- |
+| Polish   | Yes       |
+| English  | Yes       |
+| Czech    | Yes       |
 
 ### Installation
 
@@ -34,3 +34,7 @@ const result = digitWords.toWords(1234);
 | Property | Type   | Required? | Default |
 | -------- | ------ | --------- | ------- |
 | value    | number | Yes       |         |
+
+##### License
+
+MIT
