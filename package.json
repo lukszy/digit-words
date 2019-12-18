@@ -1,10 +1,20 @@
 {
   "name": "digit-words",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Digits to words converted. Language support: English, Polish, Czech.",
   "main": "dist/index.js",
+  "types": "dist/typings/index.d.ts",
+  "keywords": [
+    "digits",
+    "words",
+    "numbers",
+    "typescript",
+    "polish",
+    "czech",
+    "english"
+  ],
   "repository": {
-    "url": "https://github.com/dobrysmak/digits-words"
+    "url": "https://github.com/dobrysmak/digit-words"
   },
   "scripts": {
     "test": "npx jest",
@@ -12,7 +22,7 @@
     "build:watch": "npx tsc -p tsconfig.json -w"
   },
   "author": "Lukasz Szymanski",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/preset-env": "^7.7.4",
     "@babel/preset-typescript": "^7.7.4",

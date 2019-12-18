@@ -19,15 +19,5 @@ describe('PL', () => {
         'siedemdziesiąt siedem tysięcy siedemset siedemdziesiąt siedem',
       );
     });
-
-    // it('123.22', () => {
-    //   expect(convert(123.22)).toEqual('sto dwadzieścia trzy i 22/100');
-    // });
-
-    // it('4312.1', () => {
-    //   expect(convert(4312.1)).toEqual(
-    //     'cztery tysiące trzysta dwanaście i 10/100',
-    //   );
-    // });
   });
 });
