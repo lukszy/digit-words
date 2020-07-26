@@ -25,8 +25,19 @@ import DigitWords from 'digit-words';
 const digitWords = new DigitWords(); // default is 'pl'
 
 const result = digitWords.toWords(1234);
-// jeden tysiąc dwieście trzydzieści cztery
+// logs 'jeden tysiąc dwieście trzydzieści cztery'
 
+```
+
+Using english language
+
+```
+import DigitWords from 'digit-words';
+
+const digitWord = new DigitWords('en');
+
+const result = digitWords.toWords(4321);
+// logs 'four thousand three hundred twenty-one'
 ```
 
 ##### _toWords(value: number)_

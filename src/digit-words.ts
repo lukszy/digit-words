@@ -5,7 +5,7 @@ interface Converter {
 export class DigitWords {
   private converter: Converter;
 
-  constructor(private lang: string = 'pl') {
+  constructor(lang: string = 'pl') {
     try {
       this.converter = require(`./${lang}`);
     } catch (e) {
