@@ -1,16 +1,18 @@
-interface Converter {
-  convert: (value: number) => string;
+import { convert as pl } from './pl';
+import { convert as cz } from './cz';
+import { convert as en } from './en';
+
+const langMap = {
+  pl,
+  cz,
+  en
 }
 
 export class DigitWords {
-  private converter: Converter;
+  private converter: (value: number) => string;;
 
   constructor(lang: string = 'pl') {
-    try {
-      this.converter = require(`./${lang}`);
-    } catch (e) {
-      throw new Error(`Language is NOT yet supported`);
-    }
+    this.converter = langMap[lang];
   }
 
   toWords(value: number): string {
@@ -22,6 +24,6 @@ export class DigitWords {
       throw new Error('Value must be greater than 0.');
     }
 
-    return this.converter.convert(value);
+    return this.converter(value);
   }
 }
