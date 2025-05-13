@@ -15,6 +15,10 @@ export const toText = (value: number | string, lang: string = 'pl'): string => {
     throw new Error('Invalid number value.');
   }
 
+  if (numberValue < 0) {
+    throw new Error('Value must be greater than 0.');
+  }
+
   const converter = langMap[lang];
 
   if (!converter) {

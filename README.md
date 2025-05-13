@@ -20,11 +20,9 @@ npm i digit-words
 ### Usage
 
 ```
-import DigitWords from 'digit-words';
+import { toText } from 'digit-words';
 
-const digitWords = new DigitWords(); // default is 'pl'
-
-const result = digitWords.toWords(1234);
+const result = toText(1234);
 // logs 'jeden tysiąc dwieście trzydzieści cztery'
 
 ```
@@ -32,19 +30,18 @@ const result = digitWords.toWords(1234);
 Using english language
 
 ```
-import DigitWords from 'digit-words';
+import { toText } from 'digit-words';
 
-const digitWord = new DigitWords('en');
-
-const result = digitWords.toWords(4321);
-// logs 'four thousand three hundred twenty-one'
+const result = toText(1234);
+// logs 'one thousand two hundred thirty-four'
 ```
 
-##### _toWords(value: number)_
+##### _toWords(value: number | string, lang = 'pl')_
 
 | Property | Type   | Required? | Default |
 | -------- | ------ | --------- | ------- |
-| value    | number | Yes       |         |
+| value    | number | string | Yes       |         |
+| lang     | string | No | 'PL'
 
 ##### License
 
