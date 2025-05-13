@@ -1,7 +1,7 @@
 import { breakNumber } from '../utils';
 
 const unity = {
-  0: '',
+  0: 'nula',
   1: 'jedna',
   2: 'dva',
   3: 'tři',
@@ -65,7 +65,9 @@ const combined = {
 };
 
 export const convert = (value: number): string => {
-  return breakNumber(value)
+  const { integer, decimal } = breakNumber(value);
+  
+  const integerPart = integer
     .reverse()
     .reduce(
       (list, val, index) => [...list, getDecimalName(val, index), toWords(val)],
@@ -74,6 +76,16 @@ export const convert = (value: number): string => {
     .reverse()
     .join(' ')
     .trim();
+
+  if (!decimal.length) {
+    return integerPart;
+  }
+
+  // Convert decimal part to fraction
+  const decimalValue = Number(decimal.join(''));
+  const denominator = Math.pow(10, decimal.length);
+  
+  return `${integerPart} a ${decimalValue}/${denominator}`;
 };
 
 const toWords = (value: number): string => {
@@ -102,6 +114,8 @@ const toWords = (value: number): string => {
 };
 
 const getDecimalName = (value: number, index: number): string => {
+  if (!value) return '';
+  
   const [single, few, multiple] = thousands[index];
   const last = Number.parseInt(value.toString().slice(-1), 10);
 

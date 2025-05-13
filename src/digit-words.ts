@@ -8,22 +8,18 @@ const langMap = {
   en
 }
 
-export class DigitWords {
-  private converter: (value: number) => string;;
+export const toText = (value: number | string, lang: string = 'pl'): string => {
+  const numberValue = Number(value);
 
-  constructor(lang: string = 'pl') {
-    this.converter = langMap[lang];
+  if (isNaN(numberValue)) {
+    throw new Error('Invalid number value.');
   }
 
-  toWords(value: number): string {
-    if (!(typeof value === 'number')) {
-      throw new Error('Value must be type number.');
-    }
+  const converter = langMap[lang];
 
-    if (value < 0) {
-      throw new Error('Value must be greater than 0.');
-    }
-
-    return this.converter(value);
+  if (!converter) {
+    throw new Error('Invalid language.');
   }
+
+  return converter(numberValue);
 }

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digit Words Demo</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      input,
+      select {
+        padding: 8px;
+        font-size: 16px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      .result {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+      }
+      .examples {
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #f8f9fa;
+      }
+      .examples h3 {
+        margin-top: 0;
+      }
+      .example-item {
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Digit Words Demo</h1>
+
+      <div class="input-group">
+        <label for="number">Enter a number:</label>
+        <input
+          type="text"
+          id="number"
+          inputmode="decimal"
+          pattern="[0-9]*[.,]?[0-9]*"
+          placeholder="Enter a number (e.g., 123,45)"
+        />
+      </div>
+
+      <div class="input-group">
+        <label for="language">Select language:</label>
+        <select id="language">
+          <option value="en">English</option>
+          <option value="pl">Polish</option>
+          <option value="cs">Czech</option>
+        </select>
+      </div>
+
+      <button id="convert-button">Convert to Words</button>
+
+      <div class="result" id="result">Result will appear here...</div>
+
+      <div class="examples">
+        <h3>Example numbers:</h3>
+        <div class="example-item">123,45</div>
+        <div class="example-item">1000,01</div>
+        <div class="example-item">999999,99</div>
+      </div>
+    </div>
+
+    <script type="module">
+      import { toText } from '../dist/esm/index.js';
+
+      const convertButton = document.getElementById('convert-button');
+      const numberInput = document.getElementById('number');
+      const languageSelect = document.getElementById('language');
+      const resultElement = document.getElementById('result');
+
+      convertButton.addEventListener('click', () => {
+        const number = numberInput.value.replace(',', '.');
+        const language = languageSelect.value;
+
+        try {
+          const result = toText(number, language);
+          resultElement.textContent = result;
+        } catch (error) {
+          resultElement.textContent = `Error: ${error.message}`;
+        }
+      });
+
+      // Add click handlers for example numbers
+      document.querySelectorAll('.example-item').forEach((item) => {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => {
+          numberInput.value = item.textContent;
+          convertButton.click();
+        });
+      });
+    </script>
+  </body>
+</html>
