@@ -1,71 +1,97 @@
 import { convert } from './converter';
 
 describe('CZ', () => {
-  describe('convert', () => {
-    it('0', () => {
-      expect(convert(0)).toEqual('');
+  it('should convert zero', () => {
+    expect(convert(0)).toEqual({
+      text: 'nula',
+      integer: 0,
+      decimal: 0,
+      fraction: 'nula',
+      number: 'nula'
+    });
+  });
+
+  it('should convert integers', () => {
+    expect(convert(1)).toEqual({
+      text: 'jedna a 0/100',
+      integer: 1,
+      decimal: 0,
+      fraction: '0/100',
+      number: 'jedna'
     });
 
-    it('123', () => {
-      expect(convert(123)).toEqual('sto dvacet tři');
+    expect(convert(10)).toEqual({
+      text: 'deset a 0/100',
+      integer: 10,
+      decimal: 0,
+      fraction: '0/100',
+      number: 'deset'
     });
 
-    it('4232', () => {
-      expect(convert(4232)).toEqual('čtyři tisíc dvě stě třicet dva');
+    expect(convert(21)).toEqual({
+      text: 'dvacet jedna a 0/100',
+      integer: 21,
+      decimal: 0,
+      fraction: '0/100',
+      number: 'dvacet jedna'
     });
 
-    it('77777', () => {
-      expect(convert(77777)).toEqual(
-        'sedmdesát sedm tisíc sedm set sedmdesát sedm',
-      );
+    expect(convert(100)).toEqual({
+      text: 'sto a 0/100',
+      integer: 100,
+      decimal: 0,
+      fraction: '0/100',
+      number: 'sto'
     });
 
-    it('123323', () => {
-      expect(convert(123323)).toEqual(
-        'sto dvacet tři tisíc tři sta dvacet tři',
-      );
+    expect(convert(101)).toEqual({
+      text: 'sto jedna a 0/100',
+      integer: 101,
+      decimal: 0,
+      fraction: '0/100',
+      number: 'sto jedna'
     });
 
-    it('4567531', () => {
-      expect(convert(4567531)).toEqual(
-        'čtyři miliony pět set šedesát sedm tisíc pět set třicet jedna',
-      );
+    expect(convert(1000)).toEqual({
+      text: 'tisíc a 0/100',
+      integer: 1000,
+      decimal: 0,
+      fraction: '0/100',
+      number: 'tisíc'
+    });
+  });
+
+  it('should convert decimals', () => {
+    expect(convert(1.01)).toEqual({
+      text: 'jedna a 1/100',
+      integer: 1,
+      decimal: 1,
+      fraction: '1/100',
+      number: 'jedna'
     });
 
-    it('45675312', () => {
-      expect(convert(45675312)).toEqual(
-        'čtyřicet pět milionů šest set sedmdesát pět tisíc tři sta dvanáct',
-      );
+    expect(convert(1.1)).toEqual({
+      text: 'jedna a 10/100',
+      integer: 1,
+      decimal: 10,
+      fraction: '10/100',
+      number: 'jedna'
     });
 
-    it('456753122', () => {
-      expect(convert(456753122)).toEqual(
-        'čtyři sta padesát šest milionů sedm set padesát tři tisíc sto dvacet dva',
-      );
+    expect(convert(1.99)).toEqual({
+      text: 'jedna a 99/100',
+      integer: 1,
+      decimal: 99,
+      fraction: '99/100',
+      number: 'jedna'
     });
 
-    it('4567531221', () => {
-      expect(convert(4567531221)).toEqual(
-        'čtyři miliardy pět set šedesát sedm milionů pět set třicet jedna tisíc dvě stě dvacet jedna',
-      );
-    });
-
-    it('45675312218', () => {
-      expect(convert(45675312218)).toEqual(
-        'čtyřicet pět miliard šest set sedmdesát pět milionů tři sta dvanáct tisíc dvě stě osmnáct',
-      );
-    });
-
-    it('456753122184', () => {
-      expect(convert(456753122184)).toEqual(
-        'čtyři sta padesát šest miliard sedm set padesát tři miliony sto dvacet dva tisíc sto osmdesát čtyři',
-      );
-    });
-
-    it('4567531221843', () => {
-      expect(convert(4567531221843)).toEqual(
-        'čtyři biliony pět set šedesát sedm miliard pět set třicet jedna milion dvě stě dvacet jedna tisíc osm set čtyřicet tři',
-      );
+    expect(convert(123.45)).toEqual({
+      text: 'sto dvacet tři a 45/100',
+      integer: 123,
+      decimal: 45,
+      fraction: '45/100',
+      number: 'sto dvacet tři'
     });
   });
 });

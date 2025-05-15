@@ -8,6 +8,11 @@ Contributors all welcome!
 | Polish   | Yes       |
 | English  | Yes       |
 | Czech    | Yes       |
+| German   | Yes       |
+| French   | Yes       |
+| Spanish  | Yes       |
+| Croatian | Yes       |
+| Hindi    | Yes       |
 
 ### Installation
 

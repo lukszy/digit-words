@@ -1,97 +1,97 @@
 import { convert } from './converter';
 
-describe('EN', () => {
+describe('HI', () => {
   it('should convert zero', () => {
     expect(convert(0)).toEqual({
-      text: 'zero',
+      text: 'शून्य',
       integer: 0,
       decimal: 0,
-      fraction: 'zero',
-      number: 'zero'
+      fraction: 'शून्य',
+      number: 'शून्य'
     });
   });
 
   it('should convert integers', () => {
     expect(convert(1)).toEqual({
-      text: 'one and 0/100',
+      text: 'एक और 0/100',
       integer: 1,
       decimal: 0,
       fraction: '0/100',
-      number: 'one'
+      number: 'एक'
     });
 
     expect(convert(10)).toEqual({
-      text: 'ten and 0/100',
+      text: 'दस और 0/100',
       integer: 10,
       decimal: 0,
       fraction: '0/100',
-      number: 'ten'
+      number: 'दस'
     });
 
     expect(convert(21)).toEqual({
-      text: 'twenty-one and 0/100',
+      text: 'इक्कीस और 0/100',
       integer: 21,
       decimal: 0,
       fraction: '0/100',
-      number: 'twenty-one'
+      number: 'इक्कीस'
     });
 
     expect(convert(100)).toEqual({
-      text: 'one hundred and 0/100',
+      text: 'एक सौ और 0/100',
       integer: 100,
       decimal: 0,
       fraction: '0/100',
-      number: 'one hundred'
+      number: 'एक सौ'
     });
 
     expect(convert(101)).toEqual({
-      text: 'one hundred and one and 0/100',
+      text: 'एक सौ एक और 0/100',
       integer: 101,
       decimal: 0,
       fraction: '0/100',
-      number: 'one hundred and one'
+      number: 'एक सौ एक'
     });
 
     expect(convert(1000)).toEqual({
-      text: 'one thousand and 0/100',
+      text: 'एक हजार और 0/100',
       integer: 1000,
       decimal: 0,
       fraction: '0/100',
-      number: 'one thousand'
+      number: 'एक हजार'
     });
   });
 
   it('should convert decimals', () => {
     expect(convert(1.01)).toEqual({
-      text: 'one and 1/100',
+      text: 'एक और 1/100',
       integer: 1,
       decimal: 1,
       fraction: '1/100',
-      number: 'one'
+      number: 'एक'
     });
 
     expect(convert(1.1)).toEqual({
-      text: 'one and 10/100',
+      text: 'एक और 10/100',
       integer: 1,
       decimal: 10,
       fraction: '10/100',
-      number: 'one'
+      number: 'एक'
     });
 
     expect(convert(1.99)).toEqual({
-      text: 'one and 99/100',
+      text: 'एक और 99/100',
       integer: 1,
       decimal: 99,
       fraction: '99/100',
-      number: 'one'
+      number: 'एक'
     });
 
     expect(convert(123.45)).toEqual({
-      text: 'one hundred and twenty-three and 45/100',
+      text: 'एक सौ तेईस और 45/100',
       integer: 123,
       decimal: 45,
       fraction: '45/100',
-      number: 'one hundred and twenty-three'
+      number: 'एक सौ तेईस'
     });
   });
-});
+}); 

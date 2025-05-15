@@ -2,41 +2,41 @@ import { ConverterResult } from '../types';
 
 const units = [
   '',
-  'jeden',
-  'dwa',
-  'trzy',
-  'cztery',
-  'pięć',
-  'sześć',
-  'siedem',
-  'osiem',
-  'dziewięć',
-  'dziesięć',
-  'jedenaście',
-  'dwanaście',
-  'trzynaście',
-  'czternaście',
-  'piętnaście',
-  'szesnaście',
-  'siedemnaście',
-  'osiemnaście',
-  'dziewiętnaście',
+  'jedan',
+  'dva',
+  'tri',
+  'četiri',
+  'pet',
+  'šest',
+  'sedam',
+  'osam',
+  'devet',
+  'deset',
+  'jedanaest',
+  'dvanaest',
+  'trinaest',
+  'četrnaest',
+  'petnaest',
+  'šesnaest',
+  'sedamnaest',
+  'osamnaest',
+  'devetnaest',
 ];
 
 const tens = [
   '',
   '',
-  'dwadzieścia',
-  'trzydzieści',
-  'czterdzieści',
-  'pięćdziesiąt',
-  'sześćdziesiąt',
-  'siedemdziesiąt',
-  'osiemdziesiąt',
-  'dziewięćdziesiąt',
+  'dvadeset',
+  'trideset',
+  'četrdeset',
+  'pedeset',
+  'šezdeset',
+  'sedamdeset',
+  'osamdeset',
+  'devedeset',
 ];
 
-const scales = ['', 'tysiąc', 'milion', 'miliard', 'bilion'];
+const scales = ['', 'tisuću', 'milijun', 'milijarda', 'bilijun'];
 
 const convertLessThanThousand = (n: number): string => {
   if (n === 0) return '';
@@ -51,22 +51,22 @@ const convertLessThanThousand = (n: number): string => {
   if (hundred === 1) {
     return remainder === 0 ? 'sto' : `sto ${convertLessThanThousand(remainder)}`;
   }
-  return remainder === 0 ? `${units[hundred]}set` : `${units[hundred]}set ${convertLessThanThousand(remainder)}`;
+  return remainder === 0 ? `${units[hundred]}sto` : `${units[hundred]}sto ${convertLessThanThousand(remainder)}`;
 };
 
 const convertLessThanThousandToWords = (n: number): string => {
-  if (n === 0) return 'zero';
+  if (n === 0) return 'nula';
   return convertLessThanThousand(n);
 };
 
 export const convert = (n: number): ConverterResult => {
   if (n === 0) {
     return {
-      text: 'zero',
+      text: 'nula',
       integer: 0,
       decimal: 0,
-      fractionValue: 'zero',
-      numberValue: 'zero'
+      fractionValue: 'nula',
+      numberValue: 'nula'
     };
   }
 
@@ -83,4 +83,4 @@ export const convert = (n: number): ConverterResult => {
     fractionValue: decimalWords,
     numberValue: integerWords
   };
-};
+}; 

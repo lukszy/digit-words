@@ -1,112 +1,83 @@
-import { breakNumber } from '../utils';
+import { ConverterResult } from '../types';
 
-const unity = {
-  0: 'zero',
-  1: 'one',
-  2: 'two',
-  3: 'three',
-  4: 'four',
-  5: 'five',
-  6: 'six',
-  7: 'seven',
-  8: 'eight',
-  9: 'nine',
+const units = [
+  '',
+  'one',
+  'two',
+  'three',
+  'four',
+  'five',
+  'six',
+  'seven',
+  'eight',
+  'nine',
+  'ten',
+  'eleven',
+  'twelve',
+  'thirteen',
+  'fourteen',
+  'fifteen',
+  'sixteen',
+  'seventeen',
+  'eighteen',
+  'nineteen',
+];
+
+const tens = [
+  '',
+  '',
+  'twenty',
+  'thirty',
+  'forty',
+  'fifty',
+  'sixty',
+  'seventy',
+  'eighty',
+  'ninety',
+];
+
+const scales = ['', 'thousand', 'million', 'billion', 'trillion'];
+
+const convertLessThanThousand = (n: number): string => {
+  if (n === 0) return '';
+  if (n < 20) return units[n];
+  if (n < 100) {
+    const unit = n % 10;
+    const ten = Math.floor(n / 10);
+    return unit === 0 ? tens[ten] : `${tens[ten]}-${units[unit]}`;
+  }
+  const hundred = Math.floor(n / 100);
+  const remainder = n % 100;
+  return remainder === 0 ? `${units[hundred]} hundred` : `${units[hundred]} hundred ${convertLessThanThousand(remainder)}`;
 };
 
-const teens = {
-  11: 'eleven',
-  12: 'twelve',
-  13: 'thirteen',
-  14: 'fourteen',
-  15: 'fifteen',
-  16: 'sixteen',
-  17: 'seventeen',
-  18: 'eighteen',
-  19: 'nineteen',
+const convertLessThanThousandToWords = (n: number): string => {
+  if (n === 0) return 'zero';
+  return convertLessThanThousand(n);
 };
 
-const dozens = {
-  10: 'ten',
-  20: 'twenty',
-  30: 'thirty',
-  40: 'forty',
-  50: 'fifty',
-  60: 'sixty',
-  70: 'seventy',
-  80: 'eighty',
-  90: 'ninety',
-};
-
-const thousands = [null, 'thousand', 'million', 'billion', 'trillion'];
-
-const combined = {
-  ...unity,
-  ...teens,
-  ...dozens,
-};
-
-export const convert = (value: number): string => {
-  const { integer, decimal } = breakNumber(value);
-  
-  const integerPart = integer
-    .reverse()
-    .reduce(
-      (list, val, index) => [...list, getDecimalName(index), toWords(val)],
-      [],
-    )
-    .reverse()
-    .join(' ')
-    .trim();
-
-  if (!decimal.length) {
-    return integerPart;
+export const convert = (n: number): ConverterResult => {
+  if (n === 0) {
+    return {
+      text: 'zero',
+      integer: 0,
+      decimal: 0,
+      fractionValue: 'zero',
+      numberValue: 'zero'
+    };
   }
 
-  // Convert decimal part to fraction
-  const decimalValue = Number(decimal.join(''));
-  const denominator = Math.pow(10, decimal.length);
-  
-  return `${integerPart} and ${decimalValue}/${denominator}`;
-};
+  const integerPart = Math.floor(n);
+  const decimalPart = Math.floor((n - integerPart) * 100);
 
-const toWords = (value: number): string => {
-  let current = value;
-  let result = [];
-  let size = value.toString().length;
+  const integerWords = convertLessThanThousandToWords(integerPart);
+  const decimalWords = decimalPart === 0 ? '0/100' : `${decimalPart}/100`;
 
-  while (current) {
-    const rest = current % Math.pow(10, size - 1);
-    const dozen = current - rest;
-
-    if (size === 3 && dozen % 100 === 0) {
-      const firstDigit = current.toString().charAt(0);
-      result = [...result, unity[firstDigit], 'hundred'];
-    } else if (current in combined) {
-      result = [...result, combined[current]];
-      break;
-    } else if (dozen in combined) {
-      result = [...result, combined[dozen]];
-    }
-
-    current = rest;
-    size = rest.toString().length;
-  }
-
-  if (result.length === 1) {
-    return result.join(' ');
-  }
-
-  if (result.length === 2) {
-    return result.join('-');
-  }
-
-  return [
-    result.slice(0, 1),
-    result.slice(1, 2),
-    result.slice(2).join('-'),
-  ].join(' ');
-};
-
-const getDecimalName = (index: number): string => {
-  return thousands[index];
+  return {
+    text: decimalPart === 0 ? integerWords : `${integerWords} and ${decimalWords}`,
+    integer: integerPart,
+    decimal: decimalPart,
+    fractionValue: decimalWords,
+    numberValue: integerWords
+  };
 };
