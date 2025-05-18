@@ -7,10 +7,10 @@ export const isBetween = (value, min, max) => {
   return (value - min) * (value - max) <= 0;
 };
 
-export const breakNumber = (value: number): { integer: number[], decimal: number[] } => {
+export const breakNumber = (value: number): { integerText: number[], decimalText: number[] } => {
   const [integerPart, decimalPart = ''] = value.toString().split('.');
   
-  const integer = integerPart
+  const integerText = integerPart
     .split('')
     .reverse()
     .join('')
@@ -25,9 +25,9 @@ export const breakNumber = (value: number): { integer: number[], decimal: number
     })
     .reverse() || [];
 
-  const decimal = decimalPart
+  const decimalText = decimalPart
     .split('')
     .map(d => Number.parseInt(d, 10));
 
-  return { integer, decimal };
+  return { integerText, decimalText };
 };

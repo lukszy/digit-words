@@ -27,19 +27,18 @@ export const toText = async (
     throw new Error('Value must be greater than 0.');
   }
 
-  const language = lang as Language;
-  const converterLoader = langMap[language];
+  const converterLoader = langMap[lang];
 
   if (!converterLoader) {
     throw new Error('Invalid language.');
   }
 
   // Get converter from cache or load it
-  if (!converterCache[language]) {
+  if (!converterCache[lang]) {
     const module = await converterLoader();
-    converterCache[language] = module.convert;
+    converterCache[lang] = module.convert;
   }
 
-  const converter = converterCache[language]!;
+  const converter = converterCache[lang];
   return converter(numberValue);
 };

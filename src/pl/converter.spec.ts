@@ -4,94 +4,154 @@ describe('PL', () => {
   it('should convert zero', () => {
     expect(convert(0)).toEqual({
       text: 'zero',
-      integer: 0,
-      decimal: 0,
-      fractionValue: 'zero',
-      numberValue: 'zero'
+      integerText: '0',
+      decimalText: '0/100',
+      integerValue: 0,
+      decimalValue: 0
     });
   });
 
-  it('should convert integers', () => {
-    expect(convert(1)).toEqual({
-      text: 'jeden i 0/100',
-      integer: 1,
-      decimal: 0,
-      fractionValue: '0/100',
-      numberValue: 'jeden'
+  describe('integers', () => {
+    it('should convert 1', () => {
+      expect(convert(1)).toEqual({
+        text: 'jeden',
+        integerText: 'jeden',
+        decimalText: '0/100',
+        integerValue: 1,
+        decimalValue: 0
+      });
     });
 
-    expect(convert(10)).toEqual({
-      text: 'dziesięć i 0/100',
-      integer: 10,
-      decimal: 0,
-      fractionValue: '0/100',
-      numberValue: 'dziesięć'
+    it('should convert 10', () => {
+      expect(convert(10)).toEqual({
+        text: 'dziesięć',
+        integerText: 'dziesięć',
+        decimalText: '0/100',
+        integerValue: 10,
+        decimalValue: 0
+      });
     });
 
-    expect(convert(21)).toEqual({
-      text: 'dwadzieścia jeden i 0/100',
-      integer: 21,
-      decimal: 0,
-      fractionValue: '0/100',
-      numberValue: 'dwadzieścia jeden'
+    it('should convert 21', () => {
+      expect(convert(21)).toEqual({
+        text: 'dwadzieścia jeden',
+        integerText: 'dwadzieścia jeden',
+        decimalText: '0/100',
+        integerValue: 21,
+        decimalValue: 0
+      });
     });
 
-    expect(convert(100)).toEqual({
-      text: 'sto i 0/100',
-      integer: 100,
-      decimal: 0,
-      fractionValue: '0/100',
-      numberValue: 'sto'
+    it('should convert 100', () => {
+      expect(convert(100)).toEqual({
+        text: 'sto',
+        integerText: 'sto',
+        decimalText: '0/100',
+        integerValue: 100,
+        decimalValue: 0
+      });
     });
 
-    expect(convert(101)).toEqual({
-      text: 'sto jeden i 0/100',
-      integer: 101,
-      decimal: 0,
-      fractionValue: '0/100',
-      numberValue: 'sto jeden'
+    it('should convert 101', () => {
+      expect(convert(101)).toEqual({
+        text: 'sto jeden',
+        integerText: 'sto jeden',
+        decimalText: '0/100',
+        integerValue: 101,
+        decimalValue: 0
+      });
     });
 
-    expect(convert(1000)).toEqual({
-      text: 'tysiąc i 0/100',
-      integer: 1000,
-      decimal: 0,
-      fractionValue: '0/100',
-      numberValue: 'tysiąc'
+    it('should convert 1000', () => {
+      expect(convert(1000)).toEqual({
+        text: 'tysiąc',
+        integerText: 'tysiąc',
+        decimalText: '0/100',
+        integerValue: 1000,
+        decimalValue: 0
+      });
+    });
+
+    it('should convert 10000', () => {
+      expect(convert(10000)).toEqual({
+        text: 'dziesięć tysięcy',
+        integerText: 'dziesięć tysięcy',
+        decimalText: '0/100',
+        integerValue: 10000,
+        decimalValue: 0
+      });
+    });
+
+    it('should convert 100000', () => {
+      expect(convert(100000)).toEqual({
+        text: 'sto tysięcy',
+        integerText: 'sto tysięcy',
+        decimalText: '0/100',
+        integerValue: 100000,
+        decimalValue: 0
+      });
+    });
+
+    it('should convert 1000000', () => {
+      expect(convert(1000000)).toEqual({
+        text: 'milion',
+        integerText: 'milion',
+        decimalText: '0/100',
+        integerValue: 1000000,
+        decimalValue: 0
+      });
+    });
+
+    it('should convert 10000000', () => {
+      expect(convert(10000000)).toEqual({
+        text: 'dziesięć milionów',
+        integerText: 'dziesięć milionów',
+        decimalText: '0/100',
+        integerValue: 10000000,
+        decimalValue: 0
+      });
     });
   });
 
-  it('should convert decimals', () => {
-    expect(convert(1.01)).toEqual({
-      text: 'jeden i 1/100',
-      integer: 1,
-      decimal: 1,
-      fractionValue: '1/100',
-      numberValue: 'jeden'
+  describe('decimals', () => {
+    it('should convert 1.01', () => {
+      expect(convert(1.01)).toEqual({
+        text: 'jeden i 1/100',
+        integerText: 'jeden',
+        decimalText: '1/100',
+        integerValue: 1,
+        decimalValue: 1
+      });
     });
 
-    expect(convert(1.1)).toEqual({
-      text: 'jeden i 10/100',
-      integer: 1,
-      decimal: 10,
-      fractionValue: '10/100',
-      numberValue: 'jeden'
+    it('should convert 1.1', () => {
+      expect(convert(1.1)).toEqual({
+        text: 'jeden i 10/100',
+        integerText: 'jeden',
+        decimalText: '10/100',
+        integerValue: 1,
+        decimalValue: 10
+      });
     });
 
-    expect(convert(1.99)).toEqual({
-      text: 'jeden i 99/100',
-      integer: 1,
-      decimal: 99,
-      fractionValue: '99/100',
-      numberValue: 'jeden'
+    it('should convert 1.99', () => {
+      expect(convert(1.99)).toEqual({
+        text: 'jeden i 99/100',
+        integerText: 'jeden',
+        decimalText: '99/100',
+        integerValue: 1,
+        decimalValue: 99
+      });
     });
 
-    expect(convert(123.45)).toEqual({
-      text: 'sto dwadzieścia trzy i 45/100',
-      integer: 123,
-      decimal: 45,
-      fractionValue: '45/100',
-      numberValue: 'sto dwadzieścia trzy'
+    it('should convert 123.45', () => {
+      expect(convert(123.45)).toEqual({
+        text: 'sto dwadzieścia trzy i 45/100',
+        integerText: 'sto dwadzieścia trzy',
+        decimalText: '45/100',
+        integerValue: 123,
+        decimalValue: 45
+      });
     });
   });
 });

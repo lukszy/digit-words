@@ -48,36 +48,84 @@ const convertLessThanThousand = (n: number): string => {
   }
   const hundred = Math.floor(n / 100);
   const remainder = n % 100;
+  if (hundred === 1) {
+    return remainder === 0 ? 'einhundert' : `einhundert ${convertLessThanThousand(remainder)}`;
+  }
   return remainder === 0 ? `${units[hundred]}hundert` : `${units[hundred]}hundert ${convertLessThanThousand(remainder)}`;
 };
 
-const convertLessThanThousandToWords = (n: number): string => {
+const convertToWords = (n: number): string => {
   if (n === 0) return 'null';
-  return convertLessThanThousand(n);
+  if (n < 1000) return convertLessThanThousand(n);
+
+  let words = '';
+  let scaleIndex = 0;
+  let remainder = n;
+
+  while (remainder > 0) {
+    const chunk = remainder % 1000;
+    if (chunk !== 0) {
+      const chunkWords = convertLessThanThousand(chunk);
+      if (scaleIndex > 0) {
+        const scale = scales[scaleIndex];
+        if (chunk === 1) {
+          if (scale === 'tausend') {
+            words = 'eintausend' + (words ? ' ' + words : '');
+          } else {
+            words = `eine ${scale}` + (words ? ' ' + words : '');
+          }
+        } else {
+          let plural;
+          if (scale === 'tausend') {
+            plural = 'tausend';
+            if (chunk === 10) {
+              words = 'zehntausend' + (words ? ' ' + words : '');
+            } else if (chunk === 100) {
+              words = 'einhunderttausend' + (words ? ' ' + words : '');
+            } else {
+              words = chunkWords + ' ' + plural + (words ? ' ' + words : '');
+            }
+          } else if (scale === 'Million') {
+            plural = chunk > 1 ? 'Millionen' : 'Million';
+            words = chunkWords + ' ' + plural + (words ? ' ' + words : '');
+          } else {
+            plural = chunk > 1 ? scale + 'en' : scale;
+            words = chunkWords + ' ' + plural + (words ? ' ' + words : '');
+          }
+        }
+      } else {
+        words = chunkWords;
+      }
+    }
+    remainder = Math.floor(remainder / 1000);
+    scaleIndex++;
+  }
+
+  return words;
 };
 
 export const convert = (n: number): ConverterResult => {
   if (n === 0) {
     return {
       text: 'null',
-      integer: 0,
-      decimal: 0,
-      fractionValue: 'null',
-      numberValue: 'null'
+      integerText: 'null',
+      decimalText: '0/100',
+      integerValue: 0,
+      decimalValue: 0
     };
   }
 
   const integerPart = Math.floor(n);
   const decimalPart = Math.round((n - integerPart) * 100);
 
-  const integerWords = convertLessThanThousandToWords(integerPart);
-  const decimalWords = decimalPart === 0 ? '0/100' : `${decimalPart}/100`;
+  const integerWords = convertToWords(integerPart);
+  const decimalWords = `${decimalPart}/100`;
 
   return {
     text: decimalPart === 0 ? integerWords : `${integerWords} und ${decimalWords}`,
-    integer: integerPart,
-    decimal: decimalPart,
-    fractionValue: decimalWords,
-    numberValue: integerWords
+    integerText: integerWords,
+    decimalText: decimalWords,
+    integerValue: integerPart,
+    decimalValue: decimalPart
   };
 }; 

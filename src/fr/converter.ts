@@ -59,6 +59,10 @@ const convertLessThanThousand = (n: number): string => {
       // Special case for 90-99
       return unit === 0 ? 'quatre-vingt-dix' : `quatre-vingt-${teens[unit - 10]}`;
     }
+    // Special case for 21, 31, 41, etc.
+    if (unit === 1 && ten !== 8) {
+      return `${tens[ten]} et un`;
+    }
     return unit === 0 ? tens[ten] : `${tens[ten]}-${units[unit]}`;
   }
   const hundred = Math.floor(n / 100);
@@ -69,8 +73,24 @@ const convertLessThanThousand = (n: number): string => {
   return remainder === 0 ? `${units[hundred]} cents` : `${units[hundred]} cent ${convertLessThanThousand(remainder)}`;
 };
 
-const convertLessThanThousandToWords = (n: number): string => {
+const convertToWords = (n: number): string => {
   if (n === 0) return 'zéro';
+  if (n < 1000) return convertLessThanThousand(n);
+  
+  if (n < 1000000) {
+    const thousands = Math.floor(n / 1000);
+    const remainder = n % 1000;
+    const thousandsText = thousands === 1 ? 'mille' : `${convertLessThanThousand(thousands)} mille`;
+    return remainder === 0 ? thousandsText : `${thousandsText} ${convertLessThanThousand(remainder)}`;
+  }
+  
+  if (n < 1000000000) {
+    const millions = Math.floor(n / 1000000);
+    const remainder = n % 1000000;
+    const millionsText = millions === 1 ? 'un million' : `${convertLessThanThousand(millions)} millions`;
+    return remainder === 0 ? millionsText : `${millionsText} ${convertToWords(remainder)}`;
+  }
+  
   return convertLessThanThousand(n);
 };
 
@@ -78,24 +98,24 @@ export const convert = (n: number): ConverterResult => {
   if (n === 0) {
     return {
       text: 'zéro',
-      integer: 0,
-      decimal: 0,
-      fractionValue: 'zéro',
-      numberValue: 'zéro'
+      integerText: 'zéro',
+      decimalText: '0/100',
+      integerValue: 0,
+      decimalValue: 0
     };
   }
 
   const integerPart = Math.floor(n);
   const decimalPart = Math.round((n - integerPart) * 100);
 
-  const integerWords = convertLessThanThousandToWords(integerPart);
+  const integerWords = convertToWords(integerPart);
   const decimalWords = decimalPart === 0 ? '0/100' : `${decimalPart}/100`;
 
   return {
-    text: `${integerWords} et ${decimalWords}`,
-    integer: integerPart,
-    decimal: decimalPart,
-    fractionValue: decimalWords,
-    numberValue: integerWords
+    text: decimalPart === 0 ? integerWords : `${integerWords} et ${decimalWords}`,
+    integerText: integerWords,
+    decimalText: decimalWords,
+    integerValue: integerPart,
+    decimalValue: decimalPart
   };
 }; 

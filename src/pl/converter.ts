@@ -54,33 +54,62 @@ const convertLessThanThousand = (n: number): string => {
   return remainder === 0 ? `${units[hundred]}set` : `${units[hundred]}set ${convertLessThanThousand(remainder)}`;
 };
 
-const convertLessThanThousandToWords = (n: number): string => {
+const convertToWords = (n: number): string => {
   if (n === 0) return 'zero';
-  return convertLessThanThousand(n);
+  if (n < 1000) return convertLessThanThousand(n);
+
+  let words = '';
+  let scaleIndex = 0;
+  let remainder = n;
+
+  while (remainder > 0) {
+    const chunk = remainder % 1000;
+    if (chunk !== 0) {
+      const chunkWords = convertLessThanThousand(chunk);
+      if (scaleIndex > 0) {
+        const scale = scales[scaleIndex];
+        if (chunk === 1) {
+          words = scale + (words ? ' ' + words : '');
+        } else if (chunk > 1 && chunk < 5) {
+          const plural = scale === 'tysiąc' ? 'tysiące' : scale + 'y';
+          words = chunkWords + ' ' + plural + (words ? ' ' + words : '');
+        } else {
+          const plural = scale === 'tysiąc' ? 'tysięcy' : scale + 'ów';
+          words = chunkWords + ' ' + plural + (words ? ' ' + words : '');
+        }
+      } else {
+        words = chunkWords;
+      }
+    }
+    remainder = Math.floor(remainder / 1000);
+    scaleIndex++;
+  }
+
+  return words;
 };
 
 export const convert = (n: number): ConverterResult => {
   if (n === 0) {
     return {
       text: 'zero',
-      integer: 0,
-      decimal: 0,
-      fractionValue: 'zero',
-      numberValue: 'zero'
+      integerText: '0',
+      decimalText: '0/100',
+      integerValue: 0,
+      decimalValue: 0
     };
   }
 
   const integerPart = Math.floor(n);
-  const decimalPart = Math.round((n - integerPart) * 100);
+  const decimalPart = Math.floor((n - integerPart) * 100);
 
-  const integerWords = convertLessThanThousandToWords(integerPart);
-  const decimalWords = decimalPart === 0 ? '0/100' : `${decimalPart}/100`;
+  const integerWords = convertToWords(integerPart);
+  const decimalWords = `${decimalPart}/100`;
 
   return {
     text: decimalPart === 0 ? integerWords : `${integerWords} i ${decimalWords}`,
-    integer: integerPart,
-    decimal: decimalPart,
-    fractionValue: decimalWords,
-    numberValue: integerWords
+    integerText: integerWords,
+    decimalText: decimalWords,
+    integerValue: integerPart,
+    decimalValue: decimalPart
   };
 };

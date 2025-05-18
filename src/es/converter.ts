@@ -45,6 +45,7 @@ const convertLessThanThousand = (n: number): string => {
     const unit = n % 10;
     const ten = Math.floor(n / 10);
     if (ten === 2 && unit > 0) {
+      if (unit === 1) return 'veintiuno';
       if (unit === 3) return 'veintitrés';
       return `veinti${units[unit]}`;
     }
@@ -63,28 +64,56 @@ const convertLessThanThousandToWords = (n: number): string => {
   return convertLessThanThousand(n);
 };
 
+const convertToWords = (n: number): string => {
+  if (n === 0) return 'cero';
+  
+  let words = '';
+  let scaleIndex = 0;
+  
+  while (n > 0) {
+    const chunk = n % 1000;
+    if (chunk !== 0) {
+      let chunkWords = convertLessThanThousand(chunk);
+      if (scaleIndex > 0) {
+        if (chunk === 1 && scaleIndex === 1) {
+          chunkWords = 'un';
+        }
+        chunkWords += ` ${scales[scaleIndex]}`;
+        if (chunk !== 1 && scaleIndex > 1) {
+          chunkWords += 'es';
+        }
+      }
+      words = chunkWords + (words ? ' ' + words : '');
+    }
+    n = Math.floor(n / 1000);
+    scaleIndex++;
+  }
+  
+  return words;
+};
+
 export const convert = (n: number): ConverterResult => {
   if (n === 0) {
     return {
       text: 'cero',
-      integer: 0,
-      decimal: 0,
-      fractionValue: 'cero',
-      numberValue: 'cero'
+      integerText: 'cero',
+      decimalText: '0/100',
+      integerValue: 0,
+      decimalValue: 0
     };
   }
 
   const integerPart = Math.floor(n);
   const decimalPart = Math.round((n - integerPart) * 100);
 
-  const integerWords = convertLessThanThousandToWords(integerPart);
+  const integerWords = convertToWords(integerPart);
   const decimalWords = decimalPart === 0 ? '0/100' : `${decimalPart}/100`;
 
   return {
     text: decimalPart === 0 ? integerWords : `${integerWords} y ${decimalWords}`,
-    integer: integerPart,
-    decimal: decimalPart,
-    fractionValue: decimalWords,
-    numberValue: integerWords
+    integerText: integerWords,
+    decimalText: decimalWords,
+    integerValue: integerPart,
+    decimalValue: decimalPart
   };
 }; 

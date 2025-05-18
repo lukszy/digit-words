@@ -36,7 +36,13 @@ const tens = [
   'devedeset',
 ];
 
-const scales = ['', 'tisuću', 'milijun', 'milijarda', 'bilijun'];
+const scales = [
+  '',
+  'tisuću',
+  'milijun',
+  'milijarda',
+  'bilijun'
+];
 
 const convertLessThanThousand = (n: number): string => {
   if (n === 0) return '';
@@ -54,33 +60,55 @@ const convertLessThanThousand = (n: number): string => {
   return remainder === 0 ? `${units[hundred]}sto` : `${units[hundred]}sto ${convertLessThanThousand(remainder)}`;
 };
 
-const convertLessThanThousandToWords = (n: number): string => {
+const convertToWords = (n: number): string => {
   if (n === 0) return 'nula';
-  return convertLessThanThousand(n);
+  if (n < 1000) return convertLessThanThousand(n);
+
+  let words = '';
+  let scaleIndex = 0;
+  let remainder = n;
+
+  while (remainder > 0) {
+    const chunk = remainder % 1000;
+    if (chunk !== 0) {
+      const chunkWords = convertLessThanThousand(chunk);
+      if (scaleIndex > 0) {
+        const scale = scales[scaleIndex];
+        const plural = chunk > 1 ? (scale === 'tisuću' ? 'tisuća' : scale + 'a') : scale;
+        words = chunkWords + ' ' + plural + (words ? ' ' + words : '');
+      } else {
+        words = chunkWords;
+      }
+    }
+    remainder = Math.floor(remainder / 1000);
+    scaleIndex++;
+  }
+
+  return words;
 };
 
 export const convert = (n: number): ConverterResult => {
   if (n === 0) {
     return {
       text: 'nula',
-      integer: 0,
-      decimal: 0,
-      fractionValue: 'nula',
-      numberValue: 'nula'
+      integerText: 'nula',
+      decimalText: '0/100',
+      integerValue: 0,
+      decimalValue: 0
     };
   }
 
   const integerPart = Math.floor(n);
   const decimalPart = Math.round((n - integerPart) * 100);
 
-  const integerWords = convertLessThanThousandToWords(integerPart);
+  const integerWords = convertToWords(integerPart);
   const decimalWords = decimalPart === 0 ? '0/100' : `${decimalPart}/100`;
 
   return {
     text: decimalPart === 0 ? integerWords : `${integerWords} i ${decimalWords}`,
-    integer: integerPart,
-    decimal: decimalPart,
-    fractionValue: decimalWords,
-    numberValue: integerWords
+    integerText: integerWords,
+    decimalText: decimalWords,
+    integerValue: integerPart,
+    decimalValue: decimalPart
   };
 }; 

@@ -60,10 +60,10 @@ export const convert = (n: number): ConverterResult => {
   if (n === 0) {
     return {
       text: 'zero',
-      integer: 0,
-      decimal: 0,
-      fractionValue: 'zero',
-      numberValue: 'zero'
+      integerText: 'zero',
+      decimalText: '0/100',
+      integerValue: 0,
+      decimalValue: 0
     };
   }
 
@@ -75,9 +75,9 @@ export const convert = (n: number): ConverterResult => {
 
   return {
     text: decimalPart === 0 ? integerWords : `${integerWords} and ${decimalWords}`,
-    integer: integerPart,
-    decimal: decimalPart,
-    fractionValue: decimalWords,
-    numberValue: integerWords
+    integerText: integerWords,
+    decimalText: decimalWords,
+    integerValue: integerPart,
+    decimalValue: decimalPart
   };
 };
