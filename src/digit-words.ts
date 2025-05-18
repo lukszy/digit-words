@@ -17,11 +17,7 @@ export const toText = async (
   value: number | string,
   lang: Language = 'pl'
 ): Promise<ConverterResult> => {
-  const numberValue = Number(value);
-
-  if (isNaN(numberValue)) {
-    throw new Error('Invalid number value.');
-  }
+  const numberValue = toNumber(value);
 
   if (numberValue < 0) {
     throw new Error('Value must be greater than 0.');
@@ -41,4 +37,14 @@ export const toText = async (
 
   const converter = converterCache[lang];
   return converter(numberValue);
+};
+
+const toNumber = (value: number | string) => {
+  const numberValue = typeof value === 'string' ? Number(value.replaceAll(/ /g, '').replaceAll(',', '.')) : value;
+
+  if (isNaN(numberValue)) {
+    throw new Error('Invalid number value.');
+  }
+
+  return numberValue;
 };

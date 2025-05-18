@@ -111,6 +111,16 @@ describe('PL', () => {
         decimalValue: 0
       });
     });
+
+    it('should convert 1123', () => {
+      expect(convert(1123)).toEqual({
+        text: 'tysiąc sto dwadzieścia trzy',
+        integerText: 'tysiąc sto dwadzieścia trzy',
+        decimalText: '0/100',
+        integerValue: 1123,
+        decimalValue: 0
+      });
+    });
   });
 
   describe('decimals', () => {
@@ -150,6 +160,16 @@ describe('PL', () => {
         integerText: 'sto dwadzieścia trzy',
         decimalText: '45/100',
         integerValue: 123,
+        decimalValue: 45
+      });
+    });
+
+    it('should convert 1123.45', () => {
+      expect(convert(1123.45)).toEqual({
+        text: 'tysiąc sto dwadzieścia trzy i 45/100',
+        integerText: 'tysiąc sto dwadzieścia trzy',
+        decimalText: '45/100',
+        integerValue: 1123,
         decimalValue: 45
       });
     });
