@@ -1,6 +1,6 @@
 {
   "name": "digit-words",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "description": "Digits to words converted. Language support: English, Polish, Czech.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -34,7 +34,8 @@
     "build:esm": "tsc -p tsconfig.esm.json",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:umd": "tsc -p tsconfig.umd.json",
-    "serve": "npm run build && vite serve example"
+    "serve": "npm run build && vite serve example",
+    "publish": "npm run build && npm publish"
   },
   "author": "Lukasz Szymanski",
   "license": "MIT",
