@@ -1,6 +1,6 @@
 {
   "name": "digit-words",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Digits to words converted. Language support: English, Polish, Czech.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
