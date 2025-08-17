@@ -173,5 +173,15 @@ describe('PL', () => {
         decimalValue: 45
       });
     });
+
+    it('should convert 2214', () => {
+      expect(convert(2214)).toEqual({
+        text: 'dwa tysiące dwieście czternaście',
+        integerText: 'dwa tysiące dwieście czternaście',
+        decimalText: '0/100',
+        integerValue: 2214,
+        decimalValue: 0
+      });
+    });
   });
 });

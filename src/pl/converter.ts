@@ -36,6 +36,19 @@ const tens = [
   'dziewięćdziesiąt',
 ];
 
+const hundreds = [
+  '',
+  'sto',
+  'dwieście',
+  'trzysta',
+  'czterysta',
+  'pięćset',
+  'sześćset',
+  'siedemset',
+  'osiemset',
+  'dziewięćset',
+];
+
 const scales = ['', 'tysiąc', 'milion', 'miliard', 'bilion'];
 
 const convertLessThanThousand = (n: number): string => {
@@ -51,7 +64,7 @@ const convertLessThanThousand = (n: number): string => {
   if (hundred === 1) {
     return remainder === 0 ? 'sto' : `sto ${convertLessThanThousand(remainder)}`;
   }
-  return remainder === 0 ? `${units[hundred]}set` : `${units[hundred]}set ${convertLessThanThousand(remainder)}`;
+  return remainder === 0 ? hundreds[hundred] : `${hundreds[hundred]} ${convertLessThanThousand(remainder)}`;
 };
 
 const convertToWords = (n: number): string => {
