@@ -5,6 +5,9 @@
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
+  "bin": {
+    "digit-words": "./dist/cjs/cli.js"
+  },
   "exports": {
     ".": {
       "import": "./dist/esm/index.js",
@@ -29,11 +32,12 @@
   },
   "scripts": {
     "test": "npx jest",
-    "build": "npm run build:clean && npm run build:esm && npm run build:cjs && npm run build:umd",
+    "build": "npm run build:clean && npm run build:esm && npm run build:cjs && npm run build:umd && npm run build:cli",
     "build:clean": "rm -rf dist",
     "build:esm": "tsc -p tsconfig.esm.json",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:umd": "tsc -p tsconfig.umd.json",
+    "build:cli": "tsc -p tsconfig.cjs.json --outDir dist/cjs && chmod +x dist/cjs/cli.js",
     "serve": "npm run build && vite serve example",
     "publish": "npm run build && npm publish"
   },
