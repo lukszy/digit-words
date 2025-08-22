@@ -22,7 +22,29 @@ Using npm:
 npm i digit-words
 ```
 
-### Usage
+### CLI Usage
+
+The package includes a command-line interface for quick conversions:
+
+```bash
+# Basic usage (defaults to Polish)
+npx digit-words 1234
+
+# Specify language
+npx digit-words --lang en 1234.56
+npx digit-words -l pl 2112,24
+
+# Get help
+npx digit-words --help
+```
+
+**CLI Options:**
+- `--lang, -l <language>`: Language for conversion (default: pl)
+- `--help, -h`: Show help information
+
+**Supported languages:** en, de, es, hr, hi, pl, cz, fr
+
+### Library Usage
 
 The library provides a single async function `toText` that converts numbers to their word representation in various languages.
 
