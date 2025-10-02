@@ -73,9 +73,30 @@ jobs:
         run: pnpm test
 
       - name: Build package
-        run: pnpm run build
+        run: pnpm build
 
       - name: Publish package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish
+
+      - name: Generate release notes
+        id: release_notes
+        run: |
+          if [ "${{ steps.version.outputs.bump }}" = "true" ]; then
+            NOTES="Auto-generated release for version ${{ steps.package_version.outputs.version }}"
+          else
+            NOTES=$(git log v${{ steps.version.outputs.previous }}..HEAD --pretty=format:"- %s" || echo "Initial release")
+          fi
+          echo "notes<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$NOTES" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.package_version.outputs.version }}
+          name: Release v${{ steps.package_version.outputs.version }}
+          body: ${{ steps.release_notes.outputs.notes }}
+          draft: false
+          prerelease: false
