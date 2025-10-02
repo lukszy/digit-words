@@ -47,7 +47,7 @@ jobs:
 
       - name: Bump patch version when unchanged
         if: steps.version.outputs.bump == 'true'
-        run: npm version patch --no-git-tag-version
+        run: pnpm version patch --no-git-tag-version
 
       - name: Run tests
         run: pnpm test
@@ -58,4 +58,4 @@ jobs:
       - name: Publish package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm publish
+        run: pnpm publish
