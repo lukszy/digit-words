@@ -60,6 +60,15 @@ jobs:
           git commit -m "chore: bump patch version [skip ci]"
           git push
 
+      - name: Get version for tag
+        id: package_version
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Create and push git tag
+        run: |
+          git tag "v${{ steps.package_version.outputs.version }}"
+          git push origin "v${{ steps.package_version.outputs.version }}"
+
       - name: Run tests
         run: pnpm test
 
@@ -69,4 +78,4 @@ jobs:
       - name: Publish package
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: pnpm publish
+        run: npm publish
