@@ -64,8 +64,8 @@ describe('EN', () => {
 
     it('should convert 1000', () => {
       expect(convert(1000)).toEqual({
-        text: 'ten hundred',
-        integerText: 'ten hundred',
+        text: 'one thousand',
+        integerText: 'one thousand',
         decimalText: '0/100',
         integerValue: 1000,
         decimalValue: 0
@@ -74,8 +74,8 @@ describe('EN', () => {
 
     it('should convert 10000', () => {
       expect(convert(10000)).toEqual({
-        text: 'undefined hundred',
-        integerText: 'undefined hundred',
+        text: 'ten thousand',
+        integerText: 'ten thousand',
         decimalText: '0/100',
         integerValue: 10000,
         decimalValue: 0
@@ -84,8 +84,8 @@ describe('EN', () => {
 
     it('should convert 100000', () => {
       expect(convert(100000)).toEqual({
-        text: 'undefined hundred',
-        integerText: 'undefined hundred',
+        text: 'one hundred thousand',
+        integerText: 'one hundred thousand',
         decimalText: '0/100',
         integerValue: 100000,
         decimalValue: 0
@@ -94,8 +94,8 @@ describe('EN', () => {
 
     it('should convert 1000000', () => {
       expect(convert(1000000)).toEqual({
-        text: 'undefined hundred',
-        integerText: 'undefined hundred',
+        text: 'one million',
+        integerText: 'one million',
         decimalText: '0/100',
         integerValue: 1000000,
         decimalValue: 0
@@ -104,8 +104,8 @@ describe('EN', () => {
 
     it('should convert 10000000', () => {
       expect(convert(10000000)).toEqual({
-        text: 'undefined hundred',
-        integerText: 'undefined hundred',
+        text: 'ten million',
+        integerText: 'ten million',
         decimalText: '0/100',
         integerValue: 10000000,
         decimalValue: 0
@@ -151,6 +151,46 @@ describe('EN', () => {
         decimalText: '45/100',
         integerValue: 123,
         decimalValue: 45
+      });
+    });
+
+    it('should convert 0.25', () => {
+      expect(convert(0.25)).toEqual({
+        text: 'zero and 25/100',
+        integerText: 'zero',
+        decimalText: '25/100',
+        integerValue: 0,
+        decimalValue: 25
+      });
+    });
+
+    it('should convert 19.5', () => {
+      expect(convert(19.5)).toEqual({
+        text: 'nineteen and 50/100',
+        integerText: 'nineteen',
+        decimalText: '50/100',
+        integerValue: 19,
+        decimalValue: 50
+      });
+    });
+
+    it('should convert 1500.75', () => {
+      expect(convert(1500.75)).toEqual({
+        text: 'one thousand five hundred and 75/100',
+        integerText: 'one thousand five hundred',
+        decimalText: '75/100',
+        integerValue: 1500,
+        decimalValue: 75
+      });
+    });
+
+    it('should convert 9778,62', () => {
+      expect(convert(9778.62)).toEqual({
+        text: 'nine thousand seven hundred seventy-eight and 62/100',
+        integerText: 'nine thousand seven hundred seventy-eight',
+        decimalText: '62/100',
+        integerValue: 9778,
+        decimalValue: 62
       });
     });
   });

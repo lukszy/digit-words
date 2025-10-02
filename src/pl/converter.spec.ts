@@ -183,5 +183,45 @@ describe('PL', () => {
         decimalValue: 0
       });
     });
+
+    it('should convert 0.25', () => {
+      expect(convert(0.25)).toEqual({
+        text: 'zero i 25/100',
+        integerText: 'zero',
+        decimalText: '25/100',
+        integerValue: 0,
+        decimalValue: 25
+      });
+    });
+
+    it('should convert 19.5', () => {
+      expect(convert(19.5)).toEqual({
+        text: 'dziewiętnaście i 50/100',
+        integerText: 'dziewiętnaście',
+        decimalText: '50/100',
+        integerValue: 19,
+        decimalValue: 50
+      });
+    });
+
+    it('should convert 1500.75', () => {
+      expect(convert(1500.75)).toEqual({
+        text: 'tysiąc pięćset i 75/100',
+        integerText: 'tysiąc pięćset',
+        decimalText: '75/100',
+        integerValue: 1500,
+        decimalValue: 75
+      });
+    });
+
+    it('should convert 9778,62', () => {
+      expect(convert(9778.62)).toEqual({
+        text: 'dziewięć tysięcy siedemset siedemdziesiąt osiem i 62/100',
+        integerText: 'dziewięć tysięcy siedemset siedemdziesiąt osiem',
+        decimalText: '62/100',
+        integerValue: 9778,
+        decimalValue: 62
+      });
+    });
   });
 });

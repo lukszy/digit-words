@@ -51,9 +51,25 @@ const convertLessThanThousand = (n: number): string => {
   return remainder === 0 ? `${units[hundred]} hundred` : `${units[hundred]} hundred ${convertLessThanThousand(remainder)}`;
 };
 
-const convertLessThanThousandToWords = (n: number): string => {
+const convertIntegerToWords = (n: number): string => {
   if (n === 0) return 'zero';
-  return convertLessThanThousand(n);
+
+  const parts: string[] = [];
+  let remainder = n;
+  let scaleIndex = 0;
+
+  while (remainder > 0) {
+    const chunk = remainder % 1000;
+    if (chunk !== 0) {
+      const chunkWords = convertLessThanThousand(chunk);
+      const scale = scales[scaleIndex];
+      parts.unshift(scale ? `${chunkWords} ${scale}` : chunkWords);
+    }
+    remainder = Math.floor(remainder / 1000);
+    scaleIndex++;
+  }
+
+  return parts.join(' ');
 };
 
 export const convert = (n: number): ConverterResult => {
@@ -70,7 +86,7 @@ export const convert = (n: number): ConverterResult => {
   const integerPart = Math.floor(n);
   const decimalPart = Math.floor((n - integerPart) * 100);
 
-  const integerWords = convertLessThanThousandToWords(integerPart);
+  const integerWords = convertIntegerToWords(integerPart);
   const decimalWords = decimalPart === 0 ? '0/100' : `${decimalPart}/100`;
 
   return {
